@@ -1,0 +1,50 @@
+# General macOS-specific ignores
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on network or external drives
+.NetworkTrashFolder
+.TemporaryItems
+
+# Ignore backup files typically created by editors
+*~
+.*.swp
+.*.bak
+
+# Ignore specific folders that may contain binary or temporary files
+**/.cache/
+**/.local/share/
+**/bin/
+**/obj/
+
+# Programming languages and package managers
+*.pyc
+node_modules/
+/vendor/
+/build/
+
+# Ignore archives, logs, and databases
+*.log
+*.sql
+*.sqlite
+*.tar.gz
+*.zip
+
+# Ignore specific user workspace settings
+.vscode/
+.idea/
+*.sublime-workspace
