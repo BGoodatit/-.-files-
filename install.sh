@@ -5,7 +5,7 @@
 echo "Starting the dynamic installation of dotfiles scripts..."
 
 # Change directory to the repository location (modify this path as necessary)
-cd path/to/your/dotfiles
+cd ~/.dotfiles 
 
 # Find and execute each .sh script
 find . -name "*.sh" -exec chmod +x {} \; -exec echo "Running {}..." \; -exec {} \;
