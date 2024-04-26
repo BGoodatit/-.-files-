@@ -11,7 +11,7 @@
 set -ueo pipefail
 
 TEMP_DIR=$(mktemp -d)
-COLOR_SCHEME_URL="https://raw.githubusercontent.com/BGoodatit/.dotfiles/main/base16-londontube.dark.256.itermcolors?raw=true"
+COLOR_SCHEME_URL="https://raw.githubusercontent.com/BGoodatit/dotfiles/main/base16-londontube.dark.256.itermcolors?raw=true"
 NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts/blob/bc4416e176d4ac2092345efd7bcb4abef9d6411e/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf?raw=true"
 PLUGINS_INSTALLER_URL="https://github.com/BGoodatit/iterm-fish-fisher-osx/blob/master/install_plugins.sh?raw=true"
 
