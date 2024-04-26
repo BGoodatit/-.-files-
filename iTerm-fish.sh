@@ -446,3 +446,4 @@ install_fish_shell
 install_fisher_and_plugins
 setup_fish_config
 print_post_installation
+exit
