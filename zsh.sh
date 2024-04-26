@@ -239,6 +239,3 @@ export MANPATH="/opt/local/share/man:\$MANPATH"
 source ~/.zshrc
 neofetch| lolcat
 EOF
-
-# Make the script executable
-chmod +x ~/.zprofile
