@@ -81,13 +81,14 @@ function install_fish_shell() {
   fi
 }
 function install_fisher_and_plugins() {
-  print_info "Installing Fisher + Plugins and post-processing installation..."
-
-  # Install Oh My Fish (omf) framework
-  fish -c "curl --silent --location https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | source"
-
-  # Install Fisher and other tools within Fish shell
-  fish -c "curl --silent --location https://git.io/fisher | source && \
+  # Check if Oh My Fish is already installed
+  if fish -c "omf --version" &>/dev/null; then
+    print_success "Oh My Fish already installed, skipping..."
+  else
+    print_info "Installing Oh My Fish..."
+    fish -c "curl --silent --location https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | source"
+    # Install Fisher and other tools within Fish shell
+    fish -c "curl --silent --location https://git.io/fisher | source && \
              brew install terminal-notifier grc && \
              fisher install jorgebucaran/fisher \
                            edc/bass \
@@ -111,8 +112,8 @@ function install_fisher_and_plugins() {
              set --universal --export theme_color_scheme zenburn; \
              set --universal --export PROJECT_PATHS ~/Library/Projects && \
              fish_update_completions"
-
-  print_success "Fisher and plugins installed successfully."
+    print_success "Fisher and plugins installed successfully."
+  fi
 }
 
 function print_post_installation() {
