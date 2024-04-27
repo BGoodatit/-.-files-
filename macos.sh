@@ -226,3 +226,68 @@ defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 
 # Increase sound quality for Bluetooth headphones/headsets
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+mas install 442397431 # Address Book Clearout 2.1.10
+mas install 1451544217 # Adobe Lightroom 7.2
+mas install 6447312365 # AI Chat Bot 14.1.2
+mas install 1037126344 # Apple Configurator 2.17
+mas install 1028905953 # Betternet VPN 3.6.0
+mas install 1518425043 # Boop 1.4.0
+mas install 6449970704 # Brand Identity - Stylescape 1.0
+mas install 897446215 # Canva 1.84.0
+mas install 1500855883 # CapCut 3.7.0
+mas install 1456386228 # Clockology 1.4.8
+mas install 1130254674 # CloudMounter 4.5
+mas install 1516894961 # Codye 2.0.3
+mas install 1531594277 # Color Widgets 4.5.1
+mas install 6476814377 # com.xavyx.Easy-Face-Blur 1.4.2
+mas install 595191960 # CopyClip 1.9.8
+mas install 1487937127 # Craft 2.7.8
+mas install 6476924627 # Create Custom Symbols 1.6
+mas install 980888073 # Crypto Pro 8.0.0
+mas install 640199958 # Developer 10.5.1
+mas install 1588151344 # Essentials 1.5.2
+mas install 923463607 # Faviconer 1.1.2
+mas install 1462114288 # Grammarly for Safari 9.73
+mas install 1460330618 # Hype 4 4.1.16
+mas install 1487860882 # iMazing Profile Editor 1.9.0
+mas install 408981434 # iMovie 10.4
+mas install 409183694 # Keynote 14.0
+mas install 1602158108 # Logo Maker 2.4
+mas install 6445850897 # Logo Maker & Creator 3.7
+mas install 1369145272 # Logo Maker - Design Monogram 10.2.3
+mas install 1458866808 # MacFamilyTree 9 9.3.3
+mas install 441258766 # Magnet 2.14.0
+mas install 1480068668 # Messenger 208.0
+mas install 462058435 # Microsoft Excel 16.83
+mas install 784801555 # Microsoft OneNote 16.83
+mas install 985367838 # Microsoft Outlook 16.83.3
+mas install 462062816 # Microsoft PowerPoint 16.83
+mas install 462054704 # Microsoft Word 16.83
+mas install 1464222390 # Model Pro 1.2
+mas install 1551462255 # MouseBoost 3.3.8
+mas install 1592917505 # Noir 2024.1.9
+mas install 409203825 # Numbers 14.0
+mas install 1471867429 # OTP Auth 2.18.0
+mas install 409201541 # Pages 14.0
+mas install 600925318 # Parallels Client 19.3.24686
+mas install 1085114709 # Parallels Desktop 1.9.2
+mas install 1472777122 # PayPal Honey 16.5.1
+mas install 715483615 # Picture Collage Maker 3 Lite 3.7.10
+mas install 1289583905 # Pixelmator Pro 3.5.8
+mas install 1571283503 # Redirect Web for Safari 5.1.1
+mas install 403195710 # Remote Mouse 3.302
+mas install 1503136033 # Service Station 2020.9
+mas install 1095562398 # Shopping for Amazon 3.3.1
+mas install 442168834 # SiteSucker 5.3.2
+mas install 863015334 # Sparkle 5.5.1
+mas install 1633701470 # Sticklets 1.1.1
+mas install 1150887374 # Sticky Notes 2.1.2
+mas install 1082989794 # Templates for Pixelmator 3.0.0
+mas install 899247664 # TestFlight 3.5.1
+mas install 425424353 # The Unarchiver 4.3.6
+mas install 1241342461 # Transcribe 4.18.13
+mas install 1450874784 # Transporter 1.2.5
+mas install 1482454543 # Twitter 9.30
+mas install 1211437633 # Universe 2023.47
+mas install 497799835 # Xcode 15.3
+
