@@ -10,20 +10,21 @@
 
 set -ueo pipefail
 
+FORCE_INSTALL=${1:-""}
 TEMP_DIR=$(mktemp -d)
 COLOR_SCHEME_URL="https://raw.githubusercontent.com/BGoodatit/dotfiles/main/base16-londontube.dark.256.itermcolors?raw=true"
 NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts/blob/bc4416e176d4ac2092345efd7bcb4abef9d6411e/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf?raw=true"
 PLUGINS_INSTALLER_URL="https://github.com/BGoodatit/iterm-fish-fisher-osx/blob/master/install_plugins.sh?raw=true"
 
-INFO_LEVEL="\033[0;33m"
-SUCCESS_LEVEL="\033[0;32m"
+INFO_LEVEL="\\033[0;33m"
+SUCCESS_LEVEL="\\033[0;32m"
 
 function print_info() {
-  echo -e "${INFO_LEVEL}$1\033[0m"
+  echo -e "${INFO_LEVEL}$1\\033[0m"
 }
 
 function print_success() {
-  echo -e "${SUCCESS_LEVEL}$1\033[0m"
+  echo -e "${SUCCESS_LEVEL}$1\\033[0m"
 }
 
 function print_banner() {
@@ -439,6 +440,11 @@ EOF
 }
 
 print_banner
+if [[ "$FORCE_INSTALL" == "force" ]]; then
+  echo "Force reinstalling all components..."
+  # Installation commands here
+fi
+
 install_command_line_tools
 install_homebrew
 install_iterm
