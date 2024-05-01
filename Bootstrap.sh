@@ -12,14 +12,12 @@
 bootstrap_echo() {
   local fmt="$1"
   shift
-  # shellcheck disable=SC2059
   printf "\\n[INFO] $fmt\\n" "$@"
 }
 
 bootstrap_error() {
   local fmt="$1"
   shift
-  # shellcheck disable=SC2059
   printf "\\n[ERROR] $fmt\\n" "$@"
   exit 1
 }
@@ -28,12 +26,18 @@ bootstrap_done() {
   bootstrap_echo "Step $1 \\e[0;32m[✔]\\e[0m"
 }
 
+bootstrap_verify() {
+  if [ $? -ne 0 ]; then
+    bootstrap_error "Step $1 failed"
+  fi
+}
+
 ################################################################################
 # VARIABLE DECLARATIONS
 ################################################################################
 
 step='1'
-DEFAULT_TIME_ZONE="America/New_York"
+TIME_ZONE=$(sudo systemsetup -gettimezone | cut -d":" -f2 | xargs)
 ACTUAL_COMPUTER_NAME="Hackbook"
 HOMEBREW_PREFIX="/opt/homebrew"
 GATEKEEPER_DISABLE="Yes"
@@ -64,18 +68,18 @@ fi
 # Welcome and setup
 ################################################################################
 
-printf '\n'
-printf '************************************************************************\n'
-printf '*******                                                           ******\n'
-printf '*******                 Welcome to Mac Bootstrap!                 ******\n'
-printf '*******                                                           ******\n'
-printf '************************************************************************\n'
-printf '\n'
+printf '\\n'
+printf '************************************************************************\\n'
+printf '*******                                                           ******\\n'
+printf '*******                 Welcome to Mac Bootstrap!                 ******\\n'
+printf '*******                                                           ******\\n'
+printf '************************************************************************\\n'
+printf '\\n'
 
 # Authenticate
 if ! sudo -nv &> /dev/null; then
-  printf 'Before we get started, we need to have sudo access\n'
-  printf 'Enter your password (for sudo access):\n'
+  printf 'Before we get started, we need to have sudo access\\n'
+  printf 'Enter your password (for sudo access):\\n'
   sudo /usr/bin/true
   # Keep-alive: update existing `sudo` time stamp until bootstrap has finished
   while true; do
@@ -92,7 +96,8 @@ set -e
 ################################################################################
 bootstrap_echo "Step $step: Set the timezone to $TIME_ZONE"
 sudo systemsetup -settimezone "$TIME_ZONE" > /dev/null
-bootstrap_done "$((step++))"
+bootstrap_verify $step
+bootstrap_done $((step++))
 
 ################################################################################
 # Set computer name
