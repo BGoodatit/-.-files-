@@ -41,7 +41,7 @@ TIME_ZONE=$(sudo systemsetup -gettimezone | cut -d":" -f2 | xargs)
 ACTUAL_COMPUTER_NAME="Hackbook"
 HOMEBREW_PREFIX="/opt/homebrew"
 GATEKEEPER_DISABLE="Yes"
-MACOS_DEFAULT_URL="https://raw.githubusercontent.com/BGoodatit/.dotfiles/main/.macos"
+MACOS_DEFAULT_URL="https://raw.githubusercontent.com/BGoodatit/dotfiles/main/macos.sh"
 DEFAULT_PASSPHRASE="P0ptartSpaceD0g"
 QUIET=false
 
@@ -179,10 +179,6 @@ bootstrap_done "$((step++))"
 # zsh plugin
 ################################################################################
 bootstrap_echo "Step $step: Install or upgrade zsh plugin"
-if ! [ -f ~/.config/powerlevel10k/powerlevel10k.zsh-theme ]; then
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.config/powerlevel10k
-  echo 'source ~/.config/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
-fi
 brew bundle --file=- <<EOF
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
