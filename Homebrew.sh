@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
-#
 # Author  : Chad Mayfield (chad@chadmayfield.com)
 # License : GPLv3
-#
 # setup macOS using Homebrew
-#
-
 # install rosetta on apple silicon
 if [[ "$(sysctl -n machdep.cpu.brand_string)" == *'Apple'* ]]; then
   if [ ! -d "/usr/libexec/rosetta" ]; then
@@ -27,9 +23,9 @@ else
   # show version
   xcode-select --version
   # show compiler version
-  #gcc -v
-  #llvm-gcc -v
-  #clang -v
+  gcc -v
+  llvm-gcc -v
+  clang -v
 fi
 
 # install homebrew
@@ -43,8 +39,8 @@ if [ "$has_brew" -eq 0 ]; then
   # https://www.n00py.io/2016/10/privilege-escalation-on-os-x-without-exploits/
   if [[ "$(sysctl -n machdep.cpu.brand_string)" == *'Apple'* ]]; then
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/${USER}/.zprofile
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/${USER}/.bash_profile
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    echo 'eval "$(/opt/homebrew/bin/brew shelling)"' >> /Users/${USER}/.bash_profile
+    eval '"$(/opt/homebrew/bin/brew shellenv)"' | source
     
     #echo 'export PATH=/opt/homebrew/bin:$PATH' >> /Users/${USER}/.bash_profile
     #echo 'export PATH=/opt/homebrew/sbin:$PATH' >> /Users/${USER}/.bash_profile
@@ -62,7 +58,7 @@ if
 brew update
 
 # run brewfile to install packages
-brew bundle install
+#brew bundle install
 
 # check for issues
 brew doctor
