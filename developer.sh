@@ -119,5 +119,50 @@ brew install yarn
 source ~/.zshrc
 source ~/.bashrc
 source ~/.config/fish/config.fish
+# Install pyenv for managing Python versions
+echo "Installing pyenv..."
+brew install pyenv
+
+# Initialize pyenv in shell configurations
+echo "eval '$(pyenv init --path)'" >>~/.bash_profile
+echo "eval '$(pyenv init -)'" >>~/.bash_profile
+
+echo "eval '$(pyenv init --path)'" >>~/.zprofile
+echo "eval '$(pyenv init -)'" >>~/.zprofile
+
+echo "status --is-interactive; and source (pyenv init - | psub)" >>~/.config/fish/config.fish
+
+# Install the latest stable version of Python
+latest_python=$(pyenv install --list | grep -v - | grep -v b | tail -1)
+echo "Installing Python $latest_python using pyenv..."
+pyenv install "$latest_python"
+pyenv global "$latest_python"
+
+# Create a default virtual environment
+echo "Creating a virtual environment..."
+pyenv virtualenv "$latest_python" venv
+
+# Set up aliases and paths for the virtual environment
+echo "export PATH=\"$HOME/.pyenv/versions/venv/bin:\$PATH\"" >>~/.bash_profile
+echo 'alias python="python3"' >>~/.bash_profile
+
+echo "export PATH=\"$HOME/.pyenv/versions/venv/bin:\$PATH\"" >>~/.zprofile
+echo 'alias python="python3"' >>~/.zprofile
+
+echo "set -Ux fish_user_paths $HOME/.pyenv/versions/venv/bin \$fish_user_paths" >>~/.config/fish/config.fish
+echo 'alias python="python3"' >>~/.config/fish/config.fish
+
+# Install Ruby using Homebrew
+echo "Installing Ruby..."
+brew install ruby
+
+# Set Homebrew-installed Ruby as default in all shell profiles
+echo "export PATH='/usr/local/opt/ruby/bin:$PATH'" >>~/.bash_profile
+echo "export PATH='/usr/local/opt/ruby/bin:$PATH'" >>~/.zprofile
+echo "set -Ux fish_user_paths /usr/local/opt/ruby/bin $fish_user_paths" >>~/.config/fish/config.fish
+
+# Inform user to restart terminal
+echo "Installation complete. Please restart your terminal to apply changes!"
+
 
 echo "Installation complete. Please restart your terminal."
