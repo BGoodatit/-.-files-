@@ -1,112 +1,75 @@
 #!/usr/bin/env bash
 # Author  : Chad Mayfield (chad@chadmayfield.com)
 # License : GPLv3
-# setup macOS using Homebrew
+# Setup macOS using Homebrew
 # Ensure the script is running on Apple Silicon
+
 if [[ $(uname -m) != "arm64" ]]; then
     echo "This script is intended only for Apple Silicon Macs."
     exit 1
 fi
-# install rosetta on apple silicon
-if [[ "$(sysctl -n machdep.cpu.brand_string)" == *'Apple'* ]]; then
-  if [ ! -d "/usr/libexec/rosetta" ]; then
+
+# Install Rosetta on Apple Silicon if needed
+if [[ "$(sysctl -n machdep.cpu.brand_string)" == *'Apple'* && ! -d "/usr/libexec/rosetta" ]]; then
     echo "Installing Rosetta..."
     sudo softwareupdate --install-rosetta --agree-to-license
-  fi
-  # show our install history, we should have rosetta
-  sudo softwareupdate --history
+    # Show our install history, we should have Rosetta
+    sudo softwareupdate --history
 fi
 
-# install xcode cli tools
-command -v "xcode-select -p" >/dev/null 2>&1; has_xcode=1 || { has_xcode=0; }
-if [ "$has_xcode" -eq 0 ]; then
-  echo "Installing XCode CLI Tools..."
-  sudo xcode-select --install
+# Install XCode CLI tools if not installed
+if ! xcode-select -p &>/dev/null; then
+    echo "Installing XCode CLI Tools..."
+    sudo xcode-select --install
 else
-  # show path
-  xcode-select -p
-  # show version
-  xcode-select --version
-  # show compiler version
-  gcc -v
-  llvm-gcc -v
-  clang -v
+    # Show path, version, and compiler version
+    xcode-select -p
+    xcode-select --version
+    gcc -v
+    clang -v
 fi
 
-# install homebrew
-command -v brew >/dev/null 2>&1; has_brew=1 || { has_brew=0; }
-if [ "$has_brew" -eq 0 ]; then
-  echo "Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-  # add 'brew --prefix' location to $PATH
-  # https://applehelpwriter.com/2018/03/21/how-homebrew-invites-users-to-get-pwned/
-  # https://www.n00py.io/2016/10/privilege-escalation-on-os-x-without-exploits/
-  if [[ "$(sysctl -n machdep.cpu.brand_string)" == *'Apple'* ]]; then
-      # Add Homebrew to your PATH in Zsh, Bash, and Fish
+# Install Homebrew if not installed
+if ! command -v brew &>/dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # Configure shell environment for Homebrew
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' | source
-    #echo 'export PATH=/opt/homebrew/bin:$PATH' >> /Users/${USER}/.bash_profile
-    #echo 'export PATH=/opt/homebrew/sbin:$PATH' >> /Users/${USER}/.bash_profile
-  else
-    echo 'export PATH="/usr/local/sbin:$PATH"' >> /Users/${USER}/.bash_profile
-  fi
+    source ~/.bash_profile
+fi
 
-  source /Users/${USER}/.bash_profile
+# Disable Homebrew analytics
+brew analytics off
 
-  # turn off brew analytics
-  brew analytics off
-if
-
-# update brew
-brew update
-
-# run brewfile to install packages
-#brew bundle install
-
-# check for issues
-brew doctor
-
-# set brew to update every 12 hours (in seconds)
-brew autoupdate start 43200
-
-# show brew auto update status for feedback
-brew autoupdate status
-
-# display outdated apps and auto-update status
-brew cu --include-mas
-
-# Update Homebrew and upgrade any already-installed formulae
+# Update Homebrew and all installed packages
 brew update
 brew upgrade
 
-# Install pyenv
+# Install rbenv and Ruby, and set global version
+brew install rbenv
+# Initialize rbenv
+echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.bash_profile
+echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.zprofile
+source ~/.bash_profile # Refresh shell settings
+
+# Install the latest stable version of Ruby
+latest_ruby=$(rbenv install -l | grep -v - | tail -1) # Automatically fetches the latest stable version
+echo "Installing Ruby version $latest_ruby..."
+rbenv install $latest_ruby
+rbenv global $latest_ruby
+
+# Install pyenv, Python, and set global version
 brew install pyenv
+latest_python=$(pyenv install -l | grep -v - | grep -v b | tail -1)
+pyenv install $latest_python
+pyenv global $latest_python
 echo 'eval "$(pyenv init --path)"' >> ~/.zprofile
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 echo 'eval "$(pyenv init --path)"' >> ~/.bash_profile
 echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 echo 'status is-login; and source (pyenv init -|psub)' >> ~/.config/fish/config.fish
-
-# Install the latest stable Python version
-LATEST_PYTHON=$(pyenv install -l | grep -v - | tail -1)
-pyenv install $LATEST_PYTHON
-pyenv global $LATEST_PYTHON
-
-# Install pip
-pyenv exec python -m ensurepip --upgrade
-
-# Install rbenv
-brew install rbenv
-echo 'eval "$(rbenv init -)"' >> ~/.zprofile
-echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-echo 'status is-login; and rbenv init - | source' >> ~/.config/fish/config.fish
-
-# Install the latest stable Ruby version
-LATEST_RUBY=$(rbenv install -l | grep -v - | tail -1)
-rbenv install $LATEST_RUBY
-rbenv global $LATEST_RUBY
 
 # Install Node.js and npm using n
 brew install n
@@ -115,54 +78,12 @@ n stable
 # Install Yarn
 brew install yarn
 
+# Set Homebrew to update automatically every 12 hours
+brew autoupdate start 43200
+
 # Refresh shell environments
 source ~/.zshrc
 source ~/.bashrc
 source ~/.config/fish/config.fish
-# Install pyenv for managing Python versions
-echo "Installing pyenv..."
-brew install pyenv
-
-# Initialize pyenv in shell configurations
-echo "eval '$(pyenv init --path)'" >>~/.bash_profile
-echo "eval '$(pyenv init -)'" >>~/.bash_profile
-
-echo "eval '$(pyenv init --path)'" >>~/.zprofile
-echo "eval '$(pyenv init -)'" >>~/.zprofile
-
-echo "status --is-interactive; and source (pyenv init - | psub)" >>~/.config/fish/config.fish
-
-# Install the latest stable version of Python
-latest_python=$(pyenv install --list | grep -v - | grep -v b | tail -1)
-echo "Installing Python $latest_python using pyenv..."
-pyenv install "$latest_python"
-pyenv global "$latest_python"
-
-# Create a default virtual environment
-echo "Creating a virtual environment..."
-pyenv virtualenv "$latest_python" venv
-
-# Set up aliases and paths for the virtual environment
-echo "export PATH=\"$HOME/.pyenv/versions/venv/bin:\$PATH\"" >>~/.bash_profile
-echo 'alias python="python3"' >>~/.bash_profile
-
-echo "export PATH=\"$HOME/.pyenv/versions/venv/bin:\$PATH\"" >>~/.zprofile
-echo 'alias python="python3"' >>~/.zprofile
-
-echo "set -Ux fish_user_paths $HOME/.pyenv/versions/venv/bin \$fish_user_paths" >>~/.config/fish/config.fish
-echo 'alias python="python3"' >>~/.config/fish/config.fish
-
-# Install Ruby using Homebrew
-echo "Installing Ruby..."
-brew install ruby
-
-# Set Homebrew-installed Ruby as default in all shell profiles
-echo "export PATH='/usr/local/opt/ruby/bin:$PATH'" >>~/.bash_profile
-echo "export PATH='/usr/local/opt/ruby/bin:$PATH'" >>~/.zprofile
-echo "set -Ux fish_user_paths /usr/local/opt/ruby/bin $fish_user_paths" >>~/.config/fish/config.fish
-
-# Inform user to restart terminal
-echo "Installation complete. Please restart your terminal to apply changes!"
-
 
 echo "Installation complete. Please restart your terminal."
