@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+ln -sv /Users/adroit/.dotfiles/zsh/.zshrc ~/.zshrc
+# Bash settings
+ln -sv ~/.dotfiles/bash/.bashrc ~/.bashrc
+ln -sv ~/.dotfiles/bash/.bash_profile ~/.bash_profile
+
+# Git settings
+ln -sv ~/.dotfiles/git/.gitconfig ~/.gitconfig
+
+# Profile settings
+ln -sv ~/.dotfiles/profile/.profile ~/.profile
+
+# Zsh settings
+ln -sv ~/.dotfiles/zsh/.zshrc ~/.zshrc
+ln -sv ~/.dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
+
+# Vim settings
+ln -sv ~/.dotfiles/vim/.viminfo ~/.viminfo
+ln -sv ~/.dotfiles/vim/.vim ~/.vim
+
+# Tmux settings
+ln -sv ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
+
+# Inputrc settings
+ln -sv ~/.dotfiles/inputrc/.inputrc ~/.inputrc
+
+# Config settings
+ln -sv ~/.dotfiles/config ~/.config
+
+# SSH settings
+ln -sv ~/.dotfiles/ssh ~/.ssh
+
+# Docker settings
+ln -sv ~/.dotfiles/docker ~/.docker
+
+# Oh My Zsh settings
+ln -sv ~/.dotfiles/oh-my-zsh ~/.oh-my-zsh
