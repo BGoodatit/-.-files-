@@ -1,4 +1,5 @@
 #!/bin/zsh
+
 # Homebrew environment variables
 export HOMEBREW_PREFIX="/opt/homebrew"
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
