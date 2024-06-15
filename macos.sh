@@ -49,10 +49,7 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool true
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 # Save screenshots to the desktop
-defaults write com.apple.screencapture location -string "${HOME}/Pictures"
-
-# Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
-defaults write com.apple.screencapture type -string "JPG"
+defaults write com.apple.screencapture location -string "${HOME}/downloads"
 
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
@@ -66,15 +63,6 @@ defaults write com.apple.screencapture disable-shadow -bool true
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
-
-# Position dock on the left side of the screen
-#defaults write com.apple.dock orientation -string "left"
-
-# Automatically hide and show the Dock
-#defaults write com.apple.dock autohide -bool true
-
-# Enable highlight hover effect for the grid view of a stack (Dock)
-defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
 # Set the icon size of Dock items to 72 pixels
 # defaults write com.apple.dock tilesize -int 72
@@ -104,7 +92,7 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock showhidden -bool true
 
 # Reset Launchpad, but keep the desktop wallpaper intact
- find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+# find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
 
 # Add a spacer to the left side of the Dock (where the applications are)
 # defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
@@ -112,30 +100,30 @@ defaults write com.apple.dock showhidden -bool true
 # Add a spacer to the right side of the Dock (where the Trash is)
 # defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
 
-# # Hot corners
-# # Possible values:
-# #  0: no-op
-# #  2: Mission Control
-# #  3: Show application windows
-# #  4: Desktop
-# #  5: Start screen saver
-# #  6: Disable screen saver
-# #  7: Dashboard
-# # 10: Put display to sleep
-# # 11: Launchpad
-# # 12: Notification Center
-# # Top left screen corner → Mission Control
-# defaults write com.apple.dock wvous-tl-corner -int 4
-# defaults write com.apple.dock wvous-tl-modifier -int 0
-# # Top right screen corner → Desktop
-# defaults write com.apple.dock wvous-tr-corner -int 2
-# defaults write com.apple.dock wvous-tr-modifier -int 0
-# # Bottom right screen corner → Start screen saver
-# defaults write com.apple.dock wvous-br-corner -int 5
-# defaults write com.apple.dock wvous-br-modifier -int 0
-# # bottom left screen corner → Desktop
+# Hot corners                        |  Modifier keys
+# Possible values:                   |  Possible values:
+#  0: no-op                          |   0: No modifier keys
+#  2: Mission Control                |   131072: Shift
+#  3: Show application windows       |   262144: Control
+#  4: Desktop                        |   524288: Option (Alt)
+#  5: Start screen saver             |   1048576: Command (⌘)
+#  6: Disable screen saver           |
+#  7: Dashboard                      |
+# 10: Put display to sleep           |
+# 11: Launchpad                      |
+# 12: Notification Center            |
+# Top left screen corner + Option (Alt) →    Put display to sleep
+ defaults write com.apple.dock wvous-tl-corner -int 10
+ defaults write com.apple.dock wvous-tl-modifier -int 524288
+# # Top right screen corner → no-op
+ defaults write com.apple.dock wvous-tr-corner -int 0
+ defaults write com.apple.dock wvous-tr-modifier -int 0
+# # Bottom right screen corner → no-op
+ defaults write com.apple.dock wvous-br-corner -int 0
+ defaults write com.apple.dock wvous-br-modifier -int 0
+# # bottom left screen corner + Option (Alt) → Launchpad
 defaults write com.apple.dock wvous-bl-corner -int 11
-defaults write com.apple.dock wvous-bl-modifier -int 0
+defaults write com.apple.dock wvous-bl-modifier -int 524288
 
 ###############################################################################
 # Finder                                                                      #
@@ -144,10 +132,10 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
 defaults write com.apple.finder QuitMenuItem -bool true
 
-# Set Dropbox directory as the default location for new Finder windows
+# Set $HOME directory as the default location for new Finder windows
 # More options here: https://github.com/mathiasbynens/dotfiles/blob/96edd4b57047f34ffbcbb708e1e4de3a2e469925/.macos#L233
-#defaults write com.apple.finder NewWindowTarget -string "PfLo"
-#defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Dropbox/"
+defaults write com.apple.finder NewWindowTarget -string "PfLo"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
 
 # Hide icons for hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
@@ -218,6 +206,15 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
   General -bool true \
   OpenWith -bool true \
   Privileges -bool true
+
+  # Remove existing Downloads directory
+rm -r ~/Downloads
+
+# Create symbolic link to iCloud Downloads
+ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs/Downloads ~/Downloads
+
+
+echo "Downloads folder has been linked to iCloud."
 
 ###############################################################################
 
